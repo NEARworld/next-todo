@@ -31,3 +31,9 @@ export const editTodo = async (todo: Task): Promise<Task> => {
   const editedTod = await res.json();
   return editedTod;
 };
+
+export const deleteTodo = async (id: string) => {
+  await fetch(`${baseUrl}/tasks/${id}`, {
+    method: 'DELETE',
+  });
+};
