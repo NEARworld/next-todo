@@ -10,11 +10,11 @@ export const TodoList: FC<Props> = ({ tasks }) => {
   return (
     <div className='overflow-x-auto'>
       <table className='table'>
-        {/* head */}
         <thead>
           <tr>
             <th>id</th>
             <th>task</th>
+            <th>actions</th>
           </tr>
         </thead>
         <tbody>
