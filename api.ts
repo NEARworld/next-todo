@@ -8,7 +8,7 @@ export const getAllTodos = async (): Promise<Task[]> => {
   return todos;
 };
 
-export const addTodo = async (todo: Task) => {
+export const addTodo = async (todo: Task): Promise<Task> => {
   const res = await fetch(`${baseUrl}/tasks`, {
     method: 'POST',
     headers: {
@@ -16,4 +16,6 @@ export const addTodo = async (todo: Task) => {
     },
     body: JSON.stringify(todo),
   });
+  const newTodo = await res.json();
+  return newTodo;
 };
