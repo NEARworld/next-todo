@@ -1,11 +1,15 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, PropsWithChildren, SetStateAction } from 'react';
 
 type Props = {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export const Modal: FC<Props> = ({ modalOpen, setModalOpen }) => {
+export const Modal: FC<PropsWithChildren<Props>> = ({
+  modalOpen,
+  setModalOpen,
+  children,
+}) => {
   return (
     <dialog
       id='my_modal_3'
@@ -21,8 +25,7 @@ export const Modal: FC<Props> = ({ modalOpen, setModalOpen }) => {
             ✕
           </button>
         </form>
-        <h3 className='font-bold text-lg'>Hello!</h3>
-        <p className='py-4'>Press ESC key or click on ✕ button to close</p>
+        {children}
       </div>
     </dialog>
   );
