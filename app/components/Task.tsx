@@ -5,6 +5,7 @@ import { FC, FormEventHandler, useState } from 'react';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import { Modal } from './Modal';
 import { editTodo } from '@/api';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   task: TaskType;
@@ -14,12 +15,14 @@ export const Task: FC<Props> = ({ task }) => {
   const [modalEditOpen, setModalEditOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState('');
+  const router = useRouter();
 
   const handleSubmitEditTodo: FormEventHandler = (e) => {
     e.preventDefault();
     editTodo({ id: task.id, text: taskToEdit });
     setTaskToEdit('');
     setModalEditOpen(false);
+    router.refresh();
   };
 
   return (
