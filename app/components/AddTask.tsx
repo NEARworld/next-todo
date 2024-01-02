@@ -1,12 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Modal } from './Modal';
+import { addTodo } from '@/api';
+import { v4 as uuidv4 } from 'uuid';
 
 export const AddTask = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [newTaskValue, setNewTaskValue] = useState<string>('');
+
+  const handleSubmitNewTask: FormEventHandler = (e) => {
+    e.preventDefault();
+    addTodo({ id: uuidv4(), text: newTaskValue });
+    setNewTaskValue('');
+    setModalOpen(false);
+  };
 
   return (
     <div>
@@ -18,7 +27,7 @@ export const AddTask = () => {
       </button>
 
       <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
-        <form>
+        <form onSubmit={handleSubmitNewTask}>
           <h3 className='font-bold text-lg'>Add new task</h3>
           <div className='modal-action'>
             <input
