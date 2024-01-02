@@ -6,6 +6,7 @@ import { Modal } from './Modal';
 
 export const AddTask = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [newTaskValue, setNewTaskValue] = useState<string>('');
 
   return (
     <div>
@@ -24,6 +25,7 @@ export const AddTask = () => {
               type='text'
               placeholder='Type here'
               className='input input-bordered w-full'
+              onChange={(e) => setNewTaskValue(e.target.value)}
             />
             <button className='btn btn-primary'>submit</button>
           </div>
