@@ -17,7 +17,7 @@ export const Task: FC<Props> = ({ task }) => {
   const [taskToEdit, setTaskToEdit] = useState('');
   const router = useRouter();
 
-  const handleSubmitEditTodo: FormEventHandler = (e) => {
+  const handleSubmitEditTodo: FormEventHandler = async (e) => {
     e.preventDefault();
     editTodo({ id: task.id, text: taskToEdit });
     setTaskToEdit('');
@@ -26,7 +26,8 @@ export const Task: FC<Props> = ({ task }) => {
   };
 
   const handleDeleteTodo = () => {
-    deleteTodo(task.id);
+    const id = task.id;
+    if (id) deleteTodo(id);
     setModalDeleteOpen(false);
     router.refresh();
   };

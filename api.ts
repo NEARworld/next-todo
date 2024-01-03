@@ -1,39 +1,31 @@
+'use server';
+
+import { PrismaClient } from '@prisma/client';
 import { Task } from './types/tasks';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const prisma = new PrismaClient();
 
-export const getAllTodos = async (): Promise<Task[]> => {
-  const res = await fetch(`${baseUrl}/tasks`, { cache: 'no-cache' });
-  const todos = res.json();
-  return todos;
+export const getAllTodos = async () => {
+  return await prisma.todo.findMany({ orderBy: { id: 'asc' } });
 };
 
-export const addTodo = async (todo: Task): Promise<Task> => {
-  const res = await fetch(`${baseUrl}/tasks`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(todo),
-  });
-  const newTodo = await res.json();
-  return newTodo;
+export const addTodo = async (text: string) => {
+  await prisma.todo.create({ data: { text } });
 };
 
 export const editTodo = async (todo: Task): Promise<Task> => {
-  const res = await fetch(`${baseUrl}/tasks/${todo.id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
+  const editedTodo = await prisma.todo.update({
+    where: {
+      id: todo.id,
     },
-    body: JSON.stringify(todo),
+    data: {
+      text: todo.text,
+    },
   });
-  const editedTod = await res.json();
-  return editedTod;
+
+  return editedTodo;
 };
 
-export const deleteTodo = async (id: string) => {
-  await fetch(`${baseUrl}/tasks/${id}`, {
-    method: 'DELETE',
-  });
+export const deleteTodo = async (id: number) => {
+  await prisma.todo.delete({ where: { id } });
 };

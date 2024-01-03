@@ -4,17 +4,19 @@ import { FormEventHandler, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Modal } from './Modal';
 import { addTodo } from '@/api';
-import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/navigation';
 
 export const AddTask = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [newTaskValue, setNewTaskValue] = useState<string>('');
+  const router = useRouter();
 
   const handleSubmitNewTask: FormEventHandler = (e) => {
     e.preventDefault();
-    addTodo({ id: uuidv4(), text: newTaskValue });
+    addTodo(newTaskValue);
     setNewTaskValue('');
     setModalOpen(false);
+    router.refresh();
   };
 
   return (
@@ -32,6 +34,7 @@ export const AddTask = () => {
           <div className='modal-action'>
             <input
               type='text'
+              value={newTaskValue}
               placeholder='Type here'
               className='input input-bordered w-full'
               onChange={(e) => setNewTaskValue(e.target.value)}
