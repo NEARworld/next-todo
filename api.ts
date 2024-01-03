@@ -1,10 +1,10 @@
 import { Task } from './types/tasks';
 
-const baseUrl = 'http://localhost:3001';
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const getAllTodos = async (): Promise<Task[]> => {
   const res = await fetch(`${baseUrl}/tasks`, { cache: 'no-cache' });
-  const todos = await res.json();
+  const todos = res.json();
   return todos;
 };
 
