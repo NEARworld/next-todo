@@ -1,7 +1,7 @@
 'use server';
 
 import { PrismaClient } from '@prisma/client';
-import { Task } from './types/tasks';
+import { Task } from '../../../types/tasks';
 
 const prisma = new PrismaClient();
 
